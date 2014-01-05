@@ -133,7 +133,7 @@ describe('GET /static.html', function() {
 
 
 describe('GET /favicon.ico', function() {
-  it('respond with script', function(done) {
+  it('respond without script', function(done) {
     request(app)
       .get('/favicon.ico')
       .expect(200)
@@ -146,7 +146,7 @@ describe('GET /favicon.ico', function() {
 })
 
 describe('GET /font.ttf', function() {
-  it('respond with script', function(done) {
+  it('respond without script', function(done) {
     request(app)
       .get('/font.ttf')
       .expect(200)
@@ -191,6 +191,20 @@ describe('GET /writeStream', function() {
   it('respond with script', function(done) {
     request(app)
       .get('/writeStream')
+      .set('Accept', 'text/html')
+      .expect(200)
+      .end(function(err, res) {
+        assert(hasScript(res.text));
+        if (err) return done(err);
+        done()
+      });
+  })
+})
+
+describe('GET /generated-docs.js.html', function() {
+  it('respond with script', function(done) {
+    request(app)
+      .get('/generated-docs.js.html')
       .set('Accept', 'text/html')
       .expect(200)
       .end(function(err, res) {

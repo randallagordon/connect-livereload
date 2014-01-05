@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = function livereload(opt) {
   // options
   var opt = opt || {};
@@ -74,7 +76,7 @@ module.exports = function livereload(opt) {
     var ignored = false;
     if (!url) return true;
     ignore.forEach(function(item) {
-      if (~url.indexOf(item)) {
+      if (path.extname(url) === item) {
         ignored = true;
       }
     });
